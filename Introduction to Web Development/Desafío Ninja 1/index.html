@@ -1,0 +1,50 @@
+<html>
+<head>
+	<link href="./styles.css" rel="stylesheet" />
+	<title>Ninja One</title>
+</head>
+<body>
+
+	<!-- Ninja create -->
+	
+	<div id='background'>
+        <div id='character' style='position:absolute; top:100px; left:450px; background-image: url("img/down1.png"); width:59px; height:86px;'></div>
+    </div>
+
+	<!-- Ninja move -->
+
+    <script type="text/javascript">
+	var leftValue = 450, topValue = 100;
+
+		function update(){
+			document.getElementById("character").style.left = leftValue+"px";
+			document.getElementById("character").style.top = topValue+"px";
+		}
+
+		document.onkeydown = function(e){
+			console.log(e);
+			if (e.keyCode == 37) { //LEFT
+				if (leftValue > 0) {
+					leftValue = leftValue - 25;
+				}
+			}
+			else if (e.keyCode == 39) { //RIGHT
+				if (leftValue < 500) {
+					leftValue = leftValue + 25;
+				}
+			}
+			else if (e.keyCode == 40) { //DOWN
+				if (topValue < 500) {
+					topValue = topValue + 25;
+				}
+			}
+			else if (e.keyCode == 38) { //TOP
+				if (topValue > 0) {
+					topValue = topValue - 25;
+				}
+			}
+			update();
+		}
+    </script>
+</body>
+</html>

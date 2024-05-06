@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<style type="text/css">
+		#ocean {
+			background-image:  url(./src/WMV\ \(1\).gif);
+			width: 900px;
+			height: 700px;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+		.player {
+			position: absolute;
+			background-image: url(./src/enes-atakan-plane-unscreen\ \(1\)\ \(1\)\ \(1\).gif);
+			width: 100px;
+			height: 105px;
+			background-repeat: no-repeat;
+		}
+		.enemy {
+			position: absolute;
+			background-image: url(./src/enemy2.png);
+			width: 80px;
+			height: 90px;
+			background-repeat: no-repeat;
+		}
+	</style>
+
+	<div id="ocean">
+		<div id="players"></div>
+		<div id="enemies"></div>
+	</div>
+
+	<script type="text/javascript">
+	
+	var player = {
+		left: 400,
+		top: 600
+	}
+
+	var enemies = [
+		{left: 200, top: 200},
+		{left: 300, top: 250},
+		{left: 400, top: 300},
+		{left: 500, top: 250},
+		{left: 600, top: 200},
+		{left: 400, top: 200}
+	]
+
+	function drawPlayer(){
+		content = "";
+		content = "<div class='player' style='left:"+player.left+"px; top: "+player.top+"px'></div>";
+		document.getElementById("players").innerHTML = content;
+	}
+	drawPlayer();
+
+	function drawEnemies(){
+		content = "";
+		console.log(enemies)
+		for (var idx = 0; idx < enemies.length; idx++){
+			content += "<div class='enemy' style='left:"+enemies[idx].left+"px; top: "+enemies[idx].top+"px'></div>";
+		}
+		document.getElementById("enemies").innerHTML = content;
+	}
+	drawEnemies();
+
+	document.onkeydown = function(e){
+			console.log(e);
+			if (e.keyCode == 37) { //LEFT
+				if (player.left > 30) {
+					player.left = player.left - 25;
+				}
+			}
+			else if (e.keyCode == 39) { //RIGHT
+				if (player.left < 825) {
+					player.left = player.left + 25;
+				}
+			}
+			else if (e.keyCode == 40) { //DOWN
+				if (player.top < 600) {
+					player.top = player.top + 25;
+				}
+			}
+			else if (e.keyCode == 38) { //TOP
+				if (player.top > 420) {
+					player.top = player.top - 25;
+				}
+			}
+			drawPlayer();
+		}
+
+
+
+
+
+	/* Desafíos:
+	(básico) Agregar característica: Mover al jugador hacia arriba y hacia abajo. (LISTO)
+	(básico) Agregar más enemigos (agrega 4 más en el océano). (LISTO)
+	(intermedio) Cambiar el fondo (diferentes colores o tus propias imágenes). (LISTO)
+	(intermedio) Cambiar avión enemigo (tus propias imágenes). (LISTO)
+	(intermedio) Cambiar avión del héroe (tus propias imágenes). (LISTO)
+	(avanzado) Modificación de característica: limita el rango de subida/bajada del jugador a 
+	aproximadamente 1/3 de la parte inferior de la pantalla. (LISTO) el 30% de 600 es 180, por lo que
+	si se limita el espacio entre el pixel 420 y 600 solo puede usarse el tercio inferior del
+	width. (Véase línea 88 de código)
+	*/
+
+	</script>
+
+</body>
+</html>

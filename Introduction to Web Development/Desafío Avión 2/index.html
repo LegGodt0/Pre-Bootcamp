@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<style type="text/css">
+		#ocean {
+			background-image:  url(./src/WMV\ \(1\).gif);
+			width: 900px;
+			height: 700px;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+		.player {
+			position: absolute;
+			background-image: url(./src/enes-atakan-plane-unscreen\ \(1\)\ \(1\)\ \(1\).gif);
+			width: 100px;
+			height: 105px;
+			background-repeat: no-repeat;
+		}
+		.enemy {
+			position: absolute;
+			background-image: url(./src/enemy2.png);
+			width: 80px;
+			height: 90px;
+			background-repeat: no-repeat;
+		}
+		.missile {
+			position: absolute;
+			background-color: rgb(172, 250, 17);
+			width: 2px;
+			height: 10px;
+		}
+	</style>
+
+	<div id="ocean">
+		<div id="players"></div>
+		<div id="enemies"></div>
+		<div id="missiles"></div>
+	</div>
+
+	<script type="text/javascript">
+	
+	var player = {
+		left: 400,
+		top: 600
+	}
+
+	var enemies = [
+		{left: 200, top: 200},
+		{left: 300, top: 250},
+		{left: 400, top: 300},
+		{left: 500, top: 250},
+		{left: 600, top: 200},
+		{left: 400, top: 200}
+	]
+
+	var missiles = []
+
+	function drawPlayer(){
+		content = "";
+		content = "<div class='player' style='left:"+player.left+"px; top: "+player.top+"px'></div>";
+		document.getElementById("players").innerHTML = content;
+	}
+
+	function drawEnemies(){
+		content = "";
+		console.log(enemies)
+		for (var idx = 0; idx < enemies.length; idx++){
+			content += "<div class='enemy' style='left:"+enemies[idx].left+"px; top: "+enemies[idx].top+"px'></div>";
+		}
+		document.getElementById("enemies").innerHTML = content;
+	}
+
+	function drawMissiles(){
+		content = "";
+		for (var idx = 0; idx < missiles.length; idx++){
+			content += "<div class='missile' style='left: "+missiles[idx].left+"px; top:"+missiles[idx].top+"px'></div>"
+		}
+		document.getElementById("missiles").innerHTML = content;
+	}
+
+	function moveEnemies(){
+		for (var idx = 0; idx < enemies.length; idx++){
+			enemies[idx].top = enemies[idx].top + 0.4;
+		}
+	}
+
+	function moveMissiles(){
+		for (var idx = 0; idx < missiles.length; idx++){
+			missiles[idx].top = missiles[idx].top - 8;
+		}
+	}
+
+	document.onkeydown = function(e){
+		console.log(e);
+		if (e.keyCode == 37) { //LEFT
+			if (player.left > 30) {
+				player.left = player.left - 30;
+			}
+		}
+		else if (e.keyCode == 39) { //RIGHT
+			if (player.left < 825) {
+				player.left = player.left + 30;
+			}
+		}
+		else if (e.keyCode == 40) { //DOWN
+			if (player.top < 600) {
+				player.top = player.top + 30;
+			}
+		}
+		else if (e.keyCode == 38) { //TOP
+			if (player.top > 420) {
+				player.top = player.top - 30;
+			}
+		}
+		if (e.keyCode == 32) { //FIRE
+			missiles.push( {left: (player.left+34), top: (player.top-8) } );
+			drawMissiles();
+		}
+		console.log(missiles)
+
+		drawPlayer();
+	}
+
+	function gameLoop(){ //Creamos el loop cada cierto tiempo ocurrirá algo
+		console.log("gameloop is running!") //Comprobación de ejecución, en este caso pass
+
+		drawPlayer();
+
+		moveEnemies();
+		drawEnemies();
+
+		moveMissiles();
+		drawMissiles();
+		setTimeout(gameLoop, 10); //Se ejecuta cada 1 seg o 1000 milisegundos
+	}
+	gameLoop();
+
+	/*Challenges
+
+	(básico) Cambiar el color de los misiles. (LISTO) se ha cambiado el color de disparo a greenyellow
+	(intermedio) Haz que los enemigos se muevan más rápido. (LISTO) se ha cambiado el valor de 5 a 15 en velocidad
+	(intermedio) Haz que los misiles se muevan más rápido. (LISTO) se ha cambiado la velocidad a 20
+	(avanzado) Haz que el juego parezca más fluido (pista: velocidad del bucle de juego) (LISTO) se ha cambiado la velocidad de juego a 0.5s
+
+	*/
+	</script>
+
+</body>
+</html>
